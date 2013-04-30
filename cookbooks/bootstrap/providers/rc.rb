@@ -2,6 +2,7 @@ action :setup do
 
   group new_resource.user
 
+  package 'build-essential'
   package 'libshadow-ruby1.8'
   chef_gem 'ruby-shadow'
   user new_resource.user do
