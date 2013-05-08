@@ -1,0 +1,13 @@
+#!/bin/bash
+
+case $1 in
+  start)
+    echo $$ > /var/run/<%= @pidfilename %>.pid;
+    exec 2>&1 <%= @command %> 1>/tmp/<%= @pidfilename %>.out
+    ;;
+   stop)
+    <%= @command %> --stop ;;
+   *)
+    echo "usage: <%= @pidfilename %> {start|stop}" ;;
+esac
+exit 0
