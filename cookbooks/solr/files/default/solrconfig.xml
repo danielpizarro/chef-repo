@@ -36,7 +36,9 @@
       <str name="q">solrpingquery</str>
     </lst>
     <lst name="defaults">
+      <str name="qt">standard</str>
       <str name="echoParams">all</str>
+      <str name="df">id</str>
     </lst>
   </requestHandler>
 

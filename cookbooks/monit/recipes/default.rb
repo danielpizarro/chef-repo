@@ -12,7 +12,7 @@ end
 service "monit" do
   action [:enable, :start]
   enabled true
-  supports [:start, :restart, :stop]
+  supports [:start, :restart, :stop, :reload]
 end
 
 directory "/etc/monit/conf.d/" do
