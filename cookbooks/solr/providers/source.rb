@@ -86,16 +86,31 @@ action :setup do
   stop_conf = "-DSTOP.PORT=#{@new_resource.stop_port} -DSTOP.KEY=#{stop_key}"
   data_conf = @new_resource.data_dir.nil? ? nil : "-Dsolr.data.dir=#{::File.join(@new_resource.data_dir, @new_resource.stop_key)}"
   multicore_conf = @new_resource.multicore ? "-Dsolr.solr.home=#{install_path}/example/multicore" : "-Dsolr.solr.home=#{install_path}/example/solr"
+  newrelic_conf = nil
+  unless @new_resource.newrelic_jar_url.nil?
+    newrelic_jar_url = @new_resource.newrelic_jar_url
+    remote_file ::File.join(install_path, 'example', 'newrelic.jar') do
+      source newrelic_jar_url
+      action :create_if_missing
+    end
+    newrelic_template_cookbook = @new_resource.newrelic_template_cookbook
+    template ::File.join(install_path, 'example', 'newrelic.yml') do
+      source 'newrelic.yml.erb'
+      cookbook newrelic_template_cookbook
+      variables :app_name => stop_key
+    end
+    newrelic_conf = "-javaagent:#{::File.join(install_path, 'example', 'newrelic.jar')}"
+  end
   jar_conf = "-jar #{install_path}/example/start.jar"
   java_conf = 'java'
-  command =  [java_conf, stop_conf, multicore_conf, jetty_conf, data_conf, jar_conf].compact.join(' ')
+  command =  [java_conf, stop_conf, multicore_conf, jetty_conf, data_conf, newrelic_conf, jar_conf].compact.join(' ')
 
 
   template "#{install_path}/example/wrapper.sh" do
     source 'wrapper.sh.erb'
     mode 0755
     cookbook 'solr'
-    variables :command => command, :pidfilename => stop_key
+    variables :command => command, :pidfilename => stop_key, :cwd => ::File.join(install_path, 'example')
   end
 
   monitrc stop_key do
