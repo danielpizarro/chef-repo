@@ -13,13 +13,21 @@ define :monitrc, :action => :enable, :reload => :delayed, :variables => {}, :tem
       source params[:template_source]
       cookbook params[:template_cookbook]
       variables params[:variables]
-      notifies :reload, resources(:service => "monit"), params[:reload]
+      if node['platform_version'] == '12.04'
+        notifies :reload, resources(:service => "monit"), params[:reload]
+      else
+        notifies :restart, resources(:service => "monit"), params[:reload]
+      end
       action :create
     end
   else
     template "/etc/monit/conf.d/#{params[:name]}.conf" do
       action :delete
-      notifies :reload, resources(:service => "monit"), params[:reload]
+      if node['platform_version'] == '12.04'
+        notifies :reload, resources(:service => "monit"), params[:reload]
+      else
+        notifies :restart, resources(:service => "monit"), params[:reload]
+      end
     end
   end
 end
