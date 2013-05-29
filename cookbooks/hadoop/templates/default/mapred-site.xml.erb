@@ -1,0 +1,59 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+
+<configuration>
+  <property>
+    <name>mapred.tasktracker.map.tasks.maximum</name>
+    <value><%= node[:hadoop][:mapred][:map_tasks_maximum] %></value>
+  </property>
+  <property>
+    <name>mapred.tasktracker.reduce.tasks.maximum</name>
+    <value><%= node[:hadoop][:mapred][:reduce_tasks_maximum] %></value>
+  </property>
+  <property>
+    <name>mapred.job.tracker</name>
+    <value><%= node[:hadoop][:master][:hostname] %>:<%= node[:hadoop][:master][:mapred_port] %></value>
+  </property>
+  <property>
+   <name>mapred.local.dir</name>
+   <value><%= node[:hadoop][:mapred][:local_dir] %></value>
+  </property>
+  <property>
+   <name>mapred.system.dir</name>
+   <value><%= node[:hadoop][:mapred][:local_dir] %></value>
+  </property>
+  <!-- Begin Enable Hue plugins -->
+  <property>
+    <name>mapred.jobtracker.plugins</name>
+    <value>org.apache.hadoop.thriftfs.ThriftJobTrackerPlugin</value>
+    <description>Comma-separated list of jobtracker plug-ins to be activated.
+    </description>
+  </property>
+  <property>
+    <name>jobtracker.thrift.address</name>
+    <value>0.0.0.0:9290</value>
+  </property>
+  <!-- End Enable Hue plugins -->
+  <!-- Begin Enable Fair Scheduler -->
+  <property>
+    <name>mapred.jobtracker.taskScheduler</name>
+    <value>org.apache.hadoop.mapred.FairScheduler</value>
+  </property>
+  <property>
+    <name>mapred.jobtracker.taskScheduler</name>
+    <value>org.apache.hadoop.mapred.FairScheduler</value>
+  </property>
+  <property>
+    <name>mapred.fairscheduler.allocation.file</name>
+    <value>/etc/hadoop-0.20/conf/fair-scheduler.xml</value>
+  </property>
+  <property>
+    <name>mapred.fairscheduler.poolnameproperty</name>
+    <value>pool.name</value>
+  </property>
+  <property>
+    <name>pool.name</name>
+    <value>${user.name}</value>
+  </property>
+  <!-- End Enable Fair Scheduler -->
+</configuration>

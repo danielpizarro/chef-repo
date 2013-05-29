@@ -1,0 +1,6 @@
+CREATE DATABASE metastore;
+USE metastore;
+SOURCE /usr/lib/hive/scripts/metastore/upgrade/mysql/hive-schema-0.7.0.mysql.sql;
+CREATE USER '<%= node[:hive][:mysql][:username] %>'@'%' IDENTIFIED BY '<%= node[:hive][:mysql][:password] %>';
+GRANT SELECT,INSERT,UPDATE,DELETE ON metastore.* TO '<%= node[:hive][:mysql][:username] %>'@'%';
+REVOKE ALTER,CREATE ON metastore.* FROM '<%= node[:hive][:mysql][:username] %>'@'%';
