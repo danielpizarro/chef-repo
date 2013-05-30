@@ -2,8 +2,8 @@ action :setup do
 
   group new_resource.user
 
-  package 'build-essential'
-  package 'libshadow-ruby1.8'
+  package('build-essential').run_action(:install)
+  package('libshadow-ruby1.8').run_action(:install)
   chef_gem 'ruby-shadow'
   user new_resource.user do
     password `openssl passwd -1 "#{new_resource.user}"`.strip
