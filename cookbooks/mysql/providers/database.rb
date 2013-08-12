@@ -4,6 +4,7 @@ action :bootstrap do
       CREATE DATABASE IF NOT EXISTS #{new_resource.database};
       GRANT ALL PRIVILEGES ON #{new_resource.database}.*
       TO #{new_resource.username}@'#{new_resource.host}' IDENTIFIED BY '#{new_resource.password}';
+      GRANT FILE ON *.* TO #{new_resource.username}@'#{new_resource.host}';
       FLUSH PRIVILEGES;
     MYSQL_CODE
     cmd = <<-BASH_CODE
@@ -18,6 +19,7 @@ action :grant do
     query = <<-MYSQL_CODE
       GRANT ALL PRIVILEGES ON #{new_resource.database}.*
       TO #{new_resource.username}@'#{new_resource.host}' IDENTIFIED BY '#{new_resource.password}';
+      GRANT FILE ON *.* TO #{new_resource.username}@'#{new_resource.host}';
       FLUSH PRIVILEGES;
     MYSQL_CODE
     cmd = <<-BASH_CODE
