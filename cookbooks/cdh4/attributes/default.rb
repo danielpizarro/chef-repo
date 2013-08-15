@@ -1,0 +1,1 @@
+default.cdh4.dist = 'cdh4.3.0'
