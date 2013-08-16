@@ -20,13 +20,24 @@ end
 
 include_recipe 'cdh4::cluster'
 
+template '/etc/hosts' do
+  source 'slave/hosts'
+  mode 0644
+end
+
+template '/etc/hadoop/conf.cluster/core-site.xml' do
+  source 'slave/core-site.xml.erb'
+  mode 0644
+end
+
 template '/etc/hadoop/conf.cluster/hdfs-site.xml' do
-  source 'hdfs-site.xml.erb'
+  source 'slave/hdfs-site.xml.erb'
+  mode 0644
 end
 
 template '/etc/hadoop/conf.cluster/mapred-site.xml' do
-  source 'mapred-site.xml.erb'
-  mode 0755
+  source 'slave/mapred-site.xml.erb'
+  mode 0644
 end
 
 directory '/var/lib/hadoop-data/dfs/dn' do
@@ -34,6 +45,16 @@ directory '/var/lib/hadoop-data/dfs/dn' do
   group 'hdfs'
   mode 0700
   recursive true
+end
+
+template '/etc/hadoop/conf.cluster/log4j.properties' do
+  source 'log4j.properties'
+  mode 0644
+end
+
+template '/etc/hadoop/conf.cluster/hadoop-metrics2.properties' do
+  source 'hadoop-metrics.properties'
+  mode 0644
 end
 
 directory '/var/lib/hadoop-data/mapred/local' do

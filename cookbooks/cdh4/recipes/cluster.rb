@@ -7,7 +7,11 @@
 # All rights reserved - Do Not Redistribute
 #
 
-directory "/etc/hadoop/conf.cluster"
+directory "/etc/hadoop/conf.cluster" do
+  owner 'root'
+  group 'hadoop'
+  mode 0755
+end
 
 execute "update-alternatives --install /etc/hadoop/conf hadoop-conf /etc/hadoop/conf.cluster 50"
 execute "update-alternatives --set hadoop-conf /etc/hadoop/conf.cluster"

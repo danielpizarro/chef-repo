@@ -19,37 +19,28 @@
 
 <configuration>
   <property>
-    <name>dfs.replication</name>
-    <value>1</value>
+    <name>fs.default.name</name>
+    <value>hdfs://master.firenxis.com:8020</value>
   </property>
-  <!-- Immediately exit safemode as soon as one DataNode checks in.
-       On a multi-node cluster, these configurations must be removed.  -->
+
+  <!-- OOZIE proxy user setting -->
   <property>
-    <name>dfs.safemode.extension</name>
-    <value>0</value>
-  </property>
-  <property>
-     <name>dfs.safemode.min.datanodes</name>
-     <value>1</value>
+    <name>hadoop.proxyuser.oozie.hosts</name>
+    <value>*</value>
   </property>
   <property>
-     <name>hadoop.tmp.dir</name>
-     <value>/var/lib/hadoop-hdfs/cache/${user.name}</value>
+    <name>hadoop.proxyuser.oozie.groups</name>
+    <value>*</value>
+  </property>
+
+  <!-- HTTPFS proxy user setting -->
+  <property>
+    <name>hadoop.proxyuser.httpfs.hosts</name>
+    <value>*</value>
   </property>
   <property>
-     <name>dfs.namenode.name.dir</name>
-     <value>file:///var/lib/hadoop-hdfs/cache/${user.name}/dfs/name</value>
+    <name>hadoop.proxyuser.httpfs.groups</name>
+    <value>*</value>
   </property>
-  <property>
-     <name>dfs.namenode.checkpoint.dir</name>
-     <value>file:///var/lib/hadoop-hdfs/cache/${user.name}/dfs/namesecondary</value>
-  </property>
-  <property>
-     <name>dfs.datanode.data.dir</name>
-     <value>file:///var/lib/hadoop-hdfs/cache/${user.name}/dfs/data</value>
-  </property>
-  <property>
-     <name>dfs.datanode.hostname</name>
-     <value>slave.firenxis.com</value>
-  </property>
+
 </configuration>

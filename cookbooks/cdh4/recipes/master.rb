@@ -18,37 +18,66 @@ end
 
 include_recipe 'cdh4::cluster'
 
+template '/etc/hosts' do
+  source 'master/hosts'
+  mode 0644
+end
+
 template '/etc/hadoop/conf.cluster/core-site.xml' do
-  source 'core-site.xml.erb'
-  mode 0755
+  source 'master/core-site.xml.erb'
+  mode 0644
 end
 
 template '/etc/hadoop/conf.cluster/hdfs-site.xml' do
-  source 'hdfs-site.xml.erb'
-  mode 0755
+  source 'master/hdfs-site.xml.erb'
+  mode 0644
 end
 
 template '/etc/hadoop/conf.cluster/mapred-site.xml' do
-  source 'mapred-site.xml.erb'
-  mode 0755
+  source 'master/mapred-site.xml.erb'
+  mode 0644
 end
 
-directory '/var/lib/hadoop-data/dfs/nn' do
-  owner 'hdfs'
-  group 'hdfs'
-  mode 0700
-  recursive true
+template '/etc/hadoop/conf.cluster/masters' do
+  source 'master/masters'
+  mode 0644
+end
+
+template '/etc/hadoop/conf.cluster/slaves' do
+  source 'master/slaves'
+  mode 0644
+end
+
+template '/etc/hadoop/conf.cluster/log4j.properties' do
+  source 'log4j.properties'
+  mode 0644
+end
+
+template '/etc/hadoop/conf.cluster/hadoop-metrics2.properties' do
+  source 'hadoop-metrics.properties'
+  mode 0644
 end
 
 execute 'sudo -u hdfs hdfs namenode -format -noninteractive' do
   returns [0, 1]
 end
 
+service 'hadoop-hdfs-namenode' do
+  action [:enable, :start]
+end
+
+service 'hadoop-hdfs-secondarynamenode' do
+  action [:enable, :start]
+end
+
 execute 'sudo -u hdfs hadoop fs -mkdir -p /tmp'
 execute 'sudo -u hdfs hadoop fs -chmod -R 1777 /tmp'
+execute 'sudo -u hdfs hadoop fs -mkdir -p /var/lib/hadoop-hdfs/cache/mapred/mapred/staging'
+execute 'sudo -u hdfs hadoop fs -chmod 1777 /var/lib/hadoop-hdfs/cache/mapred/mapred/staging'
+execute 'sudo -u hdfs hadoop fs -chown -R mapred /var/lib/hadoop-hdfs/cache/mapred'
+execute 'sudo -u hdfs hadoop fs -mkdir -p /tmp/mapred/system'
+execute 'sudo -u hdfs hadoop fs -chown mapred:hadoop /tmp/mapred/system'
 
-services.each do |daemon|
-  service daemon do
-    action [:enable, :start]
-  end
+service 'hadoop-0.20-mapreduce-jobtracker' do
+  action [:enable, :start]
 end
