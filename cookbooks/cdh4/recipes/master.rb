@@ -73,12 +73,10 @@ end
 execute 'sudo -u hdfs hadoop fs -mkdir -p /tmp'
 execute 'sudo -u hdfs hadoop fs -chmod -R 1777 /tmp'
 execute 'sudo -u hdfs hadoop fs -mkdir -p /var/lib/hadoop-hdfs/cache/mapred/mapred/staging'
-execute 'sudo -u hdfs hadoop fs -chmod 1777 /var/lib/hadoop-hdfs/cache/mapred/mapred/staging'
-execute 'sudo -u hdfs hadoop fs -chown -R mapred /var/lib/hadoop-hdfs/cache/mapred'
-execute 'sudo -u hdfs hadoop fs -mkdir -p /tmp/mapred/system'
-execute 'sudo -u hdfs hadoop fs -chown mapred:hadoop /tmp/mapred/system'
+execute 'sudo -u hdfs hadoop fs -chown mapred:hadoop /var/lib/hadoop-hdfs/cache/mapred/mapred/staging'
 execute 'sudo -u hdfs hadoop fs -mkdir -p /var/lib/hadoop-hdfs/cache/mapred/mapred/system'
-execute 'sudo -u hdfs hadoop fs -chown -R mapred /var/lib/hadoop-hdfs/cache/mapred/mapred/system'
+execute 'sudo -u hdfs hadoop fs -chown mapred:hadoop /var/lib/hadoop-hdfs/cache/mapred/mapred/system'
+execute 'sudo -u hdfs hadoop fs -chmod 1777 /var/lib/hadoop-hdfs/cache/mapred/mapred'
 
 link '/usr/lib/hadoop/hadoop-streaming-2.0.0-mr1-cdh4.3.0.jar' do
   to '/usr/lib/hadoop-0.20-mapreduce/contrib/streaming/hadoop-streaming-2.0.0-mr1-cdh4.3.0.jar'
