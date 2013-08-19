@@ -26,6 +26,7 @@ end
 
 mysql_execute "grant privileges to hive metastore user" do
   command <<-SQL
+    GRANT USAGE ON *.* TO '#{node.hive.metastore.user}'@'#{node.hive.metastore.host}';
     DROP USER '#{node.hive.metastore.user}'@'#{node.hive.metastore.host}';
     FLUSH PRIVILEGES;
     CREATE USER '#{node.hive.metastore.user}'@'#{node.hive.metastore.host}' IDENTIFIED BY '#{node.hive.metastore.password}';
