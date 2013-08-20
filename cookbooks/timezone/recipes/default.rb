@@ -12,7 +12,7 @@ if ['debian','ubuntu'].member? node[:platform]
   # Make sure it's installed. It would be a pretty broken system
   # that didn't have it.
   package "tzdata" do
-    action :upgrade
+    action [:install, :upgrade]
   end
 
   template "/etc/timezone" do
