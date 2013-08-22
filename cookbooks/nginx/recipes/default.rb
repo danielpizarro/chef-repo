@@ -8,7 +8,8 @@ apt_repository 'nginx' do
 end
 
 package 'nginx'
+execute 'rm -fv /etc/nginx/sites-enabled/default'
 service 'nginx' do
   supports :status => true, :restart => true, :reload => true
-  action :enable
+  action [:enable, :start]
 end
