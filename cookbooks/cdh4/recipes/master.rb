@@ -18,11 +18,6 @@ end
 
 include_recipe 'cdh4::cluster'
 
-template '/etc/hosts' do
-  source 'master/hosts'
-  mode 0644
-end
-
 template '/etc/hadoop/conf.cluster/core-site.xml' do
   source 'master/core-site.xml.erb'
   mode 0644
