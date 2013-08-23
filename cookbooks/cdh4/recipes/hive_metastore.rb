@@ -8,8 +8,6 @@
 #
 include_recipe 'cdh4::hive'
 
-package 'hive-metastore'
-
 node.set_unless['mysql']['server_debian_password'] = 'root123'
 node.set_unless['mysql']['server_root_password']   = 'root123'
 node.set_unless['mysql']['server_repl_password']   = 'root123'
@@ -38,6 +36,13 @@ mysql_execute "grant privileges to hive metastore user" do
   # not_if "mysql -uroot -proot123 -e \"select * from mysql.user where user='hive' and host='master.firenxis.com'\""
 end
 
+package 'hive-metastore'
+
+service 'hive-metastore' do
+  action [:enable, :start]
+end
+
 execute "sudo -u hdfs hadoop fs -mkdir -p /user/hive"
 execute "sudo -u hdfs hadoop fs -chown hive /user/hive"
+
 

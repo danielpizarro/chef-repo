@@ -31,10 +31,17 @@ services.each do |daemon|
   end
 end
 
-directory '/var/lib/hadoop-data/dfs/dn' do
+directory '/mnt/hadoop-hdfs' do
   owner 'hdfs'
-  group 'hdfs'
-  mode 0700
+  group 'hadoop'
+  mode 0755
+  recursive true
+end
+
+directory '/mnt/hadoop-hdfs/cache' do
+  owner 'hdfs'
+  group 'hadoop'
+  mode 0777
   recursive true
 end
 
