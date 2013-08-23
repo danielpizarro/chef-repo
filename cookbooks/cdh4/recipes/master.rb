@@ -6,17 +6,7 @@
 #
 # All rights reserved - Do Not Redistribute
 #
-include_recipe 'cdh4'
-
-services = ['hadoop-hdfs-namenode', 'hadoop-hdfs-secondarynamenode', 'hadoop-0.20-mapreduce-jobtracker']
-
-services.each do |daemon|
-  package daemon do
-    options "--force-yes"
-  end
-end
-
-include_recipe 'cdh4::cluster'
+include_recipe 'cdh4::client'
 
 template '/etc/hadoop/conf.cluster/core-site.xml' do
   source 'master/core-site.xml.erb'
@@ -51,6 +41,14 @@ end
 template '/etc/hadoop/conf.cluster/hadoop-metrics2.properties' do
   source 'hadoop-metrics.properties'
   mode 0644
+end
+
+services = ['hadoop-hdfs-namenode', 'hadoop-hdfs-secondarynamenode', 'hadoop-0.20-mapreduce-jobtracker']
+
+services.each do |daemon|
+  package daemon do
+    options "--force-yes"
+  end
 end
 
 execute 'sudo -u hdfs hdfs namenode -format -noninteractive' do

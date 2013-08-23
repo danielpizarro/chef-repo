@@ -6,19 +6,7 @@
 #
 # All rights reserved - Do Not Redistribute
 #
-include_recipe 'cdh4'
-
-package 'hadoop-client'
-
-services = ['hadoop-0.20-mapreduce-tasktracker', 'hadoop-hdfs-datanode']
-
-services.each do |daemon|
-  package daemon do
-    options "--force-yes"
-  end
-end
-
-include_recipe 'cdh4::cluster'
+include_recipe 'cdh4::client'
 
 template '/etc/hadoop/conf.cluster/core-site.xml' do
   source 'slave/core-site.xml.erb'
@@ -33,6 +21,14 @@ end
 template '/etc/hadoop/conf.cluster/mapred-site.xml' do
   source 'slave/mapred-site.xml.erb'
   mode 0644
+end
+
+services = ['hadoop-0.20-mapreduce-tasktracker', 'hadoop-hdfs-datanode']
+
+services.each do |daemon|
+  package daemon do
+    options "--force-yes"
+  end
 end
 
 directory '/var/lib/hadoop-data/dfs/dn' do
