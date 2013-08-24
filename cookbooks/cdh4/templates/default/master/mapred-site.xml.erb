@@ -7,6 +7,16 @@
     <value>master.firenxis.com:8021</value>
   </property>
 
+  <property>
+    <name>mapred.fairscheduler.preemption</name>
+    <value>true</value>
+  </property>
+
+  <property>
+    <name>mapred.jobtracker.taskScheduler</name>
+    <value>org.apache.hadoop.mapred.FairScheduler</value>
+  </property>
+
   <!-- Enable Hue plugins -->
   <property>
     <name>mapred.jobtracker.plugins</name>

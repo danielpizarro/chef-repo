@@ -23,6 +23,11 @@ template '/etc/hadoop/conf.cluster/mapred-site.xml' do
   mode 0644
 end
 
+template '/etc/hadoop/conf.cluster/fair-scheduler.xml' do
+  source 'master/fair-scheduler.xml.erb'
+  mode 0644
+end
+
 template '/etc/hadoop/conf.cluster/masters' do
   source 'master/masters'
   mode 0644
