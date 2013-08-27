@@ -9,12 +9,10 @@ action :install do
   package 'libssl-dev'
   if platform?('ubuntu')
     case node.platform_version
-    when 10.04
+    when "10.04"
       package 'libreadline5-dev'
-      break
-    when 12.04
+    when "12.04"
       package 'libreadline-gplv2-dev'
-      break
     end
   end
 
