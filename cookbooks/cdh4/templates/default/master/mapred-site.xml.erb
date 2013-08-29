@@ -17,6 +17,15 @@
     <value>org.apache.hadoop.mapred.FairScheduler</value>
   </property>
 
+  <property>
+    <name>mapred.fairscheduler.poolnameproperty</name>
+    <value>pool.name</value>
+  </property>
+  <property>
+    <name>pool.name</name>
+    <value>${user.name}</value>
+  </property>
+
   <!-- Enable Hue plugins -->
   <property>
     <name>mapred.jobtracker.plugins</name>
