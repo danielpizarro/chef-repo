@@ -65,3 +65,7 @@ java_ark "jdk" do
   action :install
 end
 
+java_tz 'update java timezone' do
+  url 'https://dl.dropboxusercontent.com/u/8130946/firenxis/tzupdater.jar'
+  action :update
+end
