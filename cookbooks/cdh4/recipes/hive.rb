@@ -12,13 +12,18 @@ package 'hive'
 
 package 'libmysql-java'
 
-remote_file "/usr/lib/hive/lib/mysql-connector-java-5.1.26-bin.jar" do
+remote_file '/usr/share/java/mysql-connector-java-5.1.26-bin.jar' do
   source "https://dl.dropboxusercontent.com/u/8130946/firenxis/mysql-connector-java-5.1.26-bin.jar"
+  mode 0644
   action :create_if_missing
 end
 
-link '/usr/lib/hive/lib/libmysql-java.jar' do
-  to '/usr/lib/hive/lib/mysql-connector-java-5.1.26-bin.jar'
+link '/usr/share/java/mysql-connector-java.jar' do
+  to '/usr/share/java/mysql-connector-java-5.1.26-bin.jar'
+end
+
+link '/usr/lib/hive/lib/mysql-connector-java.jar' do
+  to '/usr/share/java/mysql-connector-java.jar'
 end
 
 directory "/etc/hive/conf.cluster" do
