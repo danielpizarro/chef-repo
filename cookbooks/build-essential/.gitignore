@@ -2,6 +2,3 @@
 .cache
 .kitchen
 bin
-*.sw[op]
-
-Gemfile.lock

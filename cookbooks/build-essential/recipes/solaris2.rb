@@ -1,6 +1,6 @@
 #
-# Cookbook Name:: mysql
-# Attributes:: client
+# Cookbook Name:: build-essential
+# Recipe:: solaris2
 #
 # Copyright 2013, Opscode, Inc.
 #
@@ -17,6 +17,26 @@
 # limitations under the License.
 #
 
-default['mysql']['percona']['apt_key_id'] = 'CD2EFD2A'
-default['mysql']['percona']['apt_uri'] = 'http://repo.percona.com/apt'
-default['mysql']['percona']['apt_keyserver'] = 'keys.gnupg.net'
+%w{
+  autoconf
+  automake
+  bison
+  coreutils
+  flex
+  gcc4core
+  gcc4g++
+  gcc4objc
+  gcc3core
+  gcc3g++
+  ggrep
+  gmake
+  gtar
+  pkgconfig
+}.each do |pkg|
+
+  r = pkgutil_package pkg do
+    action( node['build_essential']['compiletime'] ? :nothing : :install )
+  end
+  r.run_action(:install) if node['build_essential']['compiletime']
+
+end

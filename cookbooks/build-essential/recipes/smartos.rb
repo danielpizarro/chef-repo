@@ -1,8 +1,8 @@
 #
-# Cookbook Name:: mysql
-# Attributes:: client
+# Cookbook Name:: build-essential
+# Recipe:: smartos
 #
-# Copyright 2013, Opscode, Inc.
+# Copyright 2008-2013, Opscode, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -17,6 +17,13 @@
 # limitations under the License.
 #
 
-default['mysql']['percona']['apt_key_id'] = 'CD2EFD2A'
-default['mysql']['percona']['apt_uri'] = 'http://repo.percona.com/apt'
-default['mysql']['percona']['apt_keyserver'] = 'keys.gnupg.net'
+%w{
+  build-essential
+}.each do |pkg|
+
+  r = package pkg do
+    action( node['build_essential']['compiletime'] ? :nothing : :install )
+  end
+  r.run_action(:install) if node['build_essential']['compiletime']
+
+end

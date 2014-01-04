@@ -1,8 +1,8 @@
 #
-# Cookbook Name:: mysql
-# Attributes:: client
+# Cookbook Name:: build-essential
+# Recipe:: default
 #
-# Copyright 2013, Opscode, Inc.
+# Copyright 2008-2009, Opscode, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -17,6 +17,8 @@
 # limitations under the License.
 #
 
-default['mysql']['percona']['apt_key_id'] = 'CD2EFD2A'
-default['mysql']['percona']['apt_uri'] = 'http://repo.percona.com/apt'
-default['mysql']['percona']['apt_keyserver'] = 'keys.gnupg.net'
+begin
+  include_recipe "build-essential::#{node['platform_family']}"
+rescue Chef::Exceptions::RecipeNotFound
+  Chef::Log.warn "A build-essential recipe does not exist for the platform_family: #{node['platform_family']}"
+end
