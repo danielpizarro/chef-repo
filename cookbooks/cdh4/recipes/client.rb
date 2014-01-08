@@ -12,8 +12,8 @@ package 'hadoop-client'
 
 include_recipe 'cdh4::cluster'
 
-link '/usr/lib/hadoop/hadoop-streaming-2.0.0-mr1-cdh4.3.0.jar' do
-  to '/usr/lib/hadoop-0.20-mapreduce/contrib/streaming/hadoop-streaming-2.0.0-mr1-cdh4.3.0.jar'
+link "/usr/lib/hadoop/hadoop-streaming-2.0.0-mr1-#{node.cdh4.dist}.jar" do
+  to "/usr/lib/hadoop-0.20-mapreduce/contrib/streaming/hadoop-streaming-2.0.0-mr1-#{node.cdh4.dist}.jar"
 end
 
 template '/etc/hadoop/conf.cluster/core-site.xml' do
