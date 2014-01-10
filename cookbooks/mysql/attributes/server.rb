@@ -19,7 +19,7 @@
 
 # Probably driven from wrapper cookbooks, environments, or roles.
 # Keep in this namespace for backwards compat
-default['mysql']['bind_address']               = node.attribute?('cloud') && node['cloud']['local_ipv4'] ? node['cloud']['local_ipv4'] : node['ipaddress']
+default['mysql']['bind_address']               = '0.0.0.0'
 default['mysql']['port']                       = 3306
 default['mysql']['nice']                       = 0
 
