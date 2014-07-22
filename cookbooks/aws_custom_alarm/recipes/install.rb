@@ -1,4 +1,5 @@
 include_recipe 'java::oracle'
+package 'libswitch-perl'
 
 directory '/usr/share/CloudWatch/' do
   owner 'root'
