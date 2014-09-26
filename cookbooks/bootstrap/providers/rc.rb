@@ -3,7 +3,13 @@ action :setup do
   group new_resource.user
 
   package('build-essential').run_action(:install)
-  package('libshadow-ruby1.8').run_action(:install)
+  if platform?('ubuntu')
+    case node.platform_version
+    when "10.04", "12.04"
+      package 'libshadow-ruby1.8'
+    when "14.04"
+    end
+  end
   chef_gem 'ruby-shadow'
   user new_resource.user do
     password `openssl passwd -1 "#{new_resource.user}"`.strip
